@@ -27,9 +27,7 @@ export default class Bootstrap implements BootstrapInterface {
     this.app.get('/', (req: Request, res: Response, next: NextFunction): void => {
         res.send('Hello World!');
       });
-    this.controllers.forEach((controller: ControllerInterface) => {
-      this.app.use(controller.path, controller.router);
-    });
+       this.controllers.forEach(({ router }: ControllerInterface) => this.app.use(router));
   }
 
   public listen(): void {

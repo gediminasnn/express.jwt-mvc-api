@@ -1,10 +1,21 @@
 import Bootstrap from './Utils/Bootstrap';
-import JwtController from './Controllers/JwtController';
-import JwtService from './Services/JwtService';
+import GenerateController from './Controllers/Jwt/GenerateController';
+import PublicKeyController from './Controllers/Jwt/PublicKeyController';
+import GenerateService from './Services/Jwt/GenerateService';
+import PublicKeyService from './Services/Jwt/PublicKeyService';
 
 (async () => {
   try {
-    const app = new Bootstrap([]);
+    // Instantiate Services
+    const generateService = new GenerateService();
+    const publicKeyService = new PublicKeyService();
+
+    // Instantiate Controllers
+    const generateController = new GenerateController(generateService);
+    const publicKeyController = new PublicKeyController(publicKeyService);
+
+    // Initialize and start the application
+    const app = new Bootstrap([generateController, publicKeyController]);
     app.listen();
   } catch (e) {
     console.error('Error starting the application:', e);
